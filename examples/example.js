@@ -7,17 +7,17 @@
 
 const join = require('path').join;
 const error = require('../');
-const koa = require('koa');
-const app = koa();
+const Koa = require('koa');
+const app = new Koa();
 
 app.use(error({
   template: join(__dirname, '../error.html')
 }));
 
-app.use(function *(){
-  if (this.path === '/404') return;
+app.use(function (ctx){
+  if (ctx.path === '/404') return Promise.resolve();
 
-  foo();
+  return foo();
 });
 
 var port = process.env.PORT || 3000;
